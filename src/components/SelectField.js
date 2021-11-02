@@ -10,7 +10,7 @@ export const SelectField = (props) => {
 
     return (
         <Box mt={3} width="100%">
-            <FormControl fullWidth>
+            <FormControl size="small" fullWidth>
                 <InputLabel>
                     {label}
                 </InputLabel>
