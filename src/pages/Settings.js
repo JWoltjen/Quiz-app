@@ -1,10 +1,11 @@
 import React from 'react'
+import { SelectField } from '../components/SelectField'
 
 function Settings() {
     return (
-        <div>
-            Settings
-        </div>
+        <form>
+            <SelectField label="Category"/>
+        </form>
     )
 }
 
