@@ -10,7 +10,7 @@ function Settings() {
     console.log(response)
     const handleSubmit = (e) => {
         e.preventDefault(); 
-    }
+    } 
 
     if(loading) {
         return (

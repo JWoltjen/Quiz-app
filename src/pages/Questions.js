@@ -11,11 +11,12 @@ function Questions() {
         amount_of_question,
 
     } = useSelector(state => state); 
-    console.log(amount_of_question)
+    console.log("number of questions", amount_of_question)
+
     let apiUrl = `/api.php?amount=10`
 
     const { response, loading } = useAxios({ url: apiUrl })
-    console.log(response)
+    console.log("this is the response", response)
 
     return (
         <Box>
