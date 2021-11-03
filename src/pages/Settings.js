@@ -4,13 +4,16 @@ import { Box } from '@mui/system'
 import { SelectField } from '../components/SelectField'
 import { TextFieldComp } from '../components/TextFieldComp'
 import useAxios from '../hooks/useAxios'
+import { useHistory } from 'react-router'
 
 function Settings() {
     const { response, error, loading } = useAxios({ url: "/api_category.php"})
+    const history = useHistory()
     console.log(response)
     const handleSubmit = (e) => {
         e.preventDefault(); 
-    } 
+        history.push('/questions')
+    }
 
     if(loading) {
         return (
@@ -38,7 +41,7 @@ function Settings() {
             </Typography>
         )
     }
-
+  
 
 
     return (
