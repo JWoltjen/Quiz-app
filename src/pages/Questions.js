@@ -1,10 +1,10 @@
 import { Button, CircularProgress, Typography } from "@mui/material"; 
 import { Box } from '@mui/system';
-import { useSelector } from 'react-redux'; 
+import { useSelector, useDispatch } from 'react-redux'; 
 import useAxios from "../hooks/useAxios"; 
 import {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
-
+import { handleScoreChange } from "../redux/actions";
 const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
   };
@@ -19,7 +19,7 @@ function Questions() {
         score
     } = useSelector((state) => state); 
     const history = useHistory(); 
-
+    const dispatch = useDispatch(); 
 
     let apiUrl = `/api.php?amount=${amount_of_question}`; 
     if(question_category) {
@@ -59,7 +59,12 @@ function Questions() {
         )
     }
 
-    const handleClickAnswer = () => {
+    const handleClickAnswer = (e) => {
+
+        const question = response.results[questionIndex]; 
+        if(e.target.textContent === question.correct_answer){
+            dispatch(handleScoreChange(score+1)) 
+        }
         if(questionIndex +1 < response.results.length){
             setQuestionIndex(questionIndex + 1)
         } else {
@@ -74,7 +79,7 @@ function Questions() {
             <Typography mt={5}>{response.results[questionIndex].question}</Typography>
             {options.map((data, id) => (
                 <Box mt={2}>
-                    <Button variant="contained">{data}</Button>
+                    <Button onClick={handleClickAnswer} variant="contained">{data}</Button>
                 </Box>
             ))}
             <Box mt={5}>Score {score} / {response.results.length} </Box>
