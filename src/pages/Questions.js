@@ -5,6 +5,10 @@ import useAxios from "../hooks/useAxios";
 import {useState, useEffect} from 'react'
 import {useHistory} from 'react-router-dom'
 import { handleScoreChange } from "../redux/actions";
+import {decode} from 'html-entities'
+
+
+
 const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
   };
@@ -76,7 +80,7 @@ function Questions() {
     return (
         <Box>
             <Typography variant="h4">Question {questionIndex +1 } </Typography>
-            <Typography mt={5}>{response.results[questionIndex].question}</Typography>
+            <Typography mt={5}>{decode(response.results[questionIndex].question)}</Typography>
             {options.map((data, id) => (
                 <Box mt={2}>
                     <Button onClick={handleClickAnswer} variant="contained">{data}</Button>
