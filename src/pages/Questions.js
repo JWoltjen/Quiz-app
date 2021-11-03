@@ -15,6 +15,7 @@ function Questions() {
         question_difficulty,
         question_type, 
         amount_of_question,
+        score
     } = useSelector((state) => state); 
 
     let apiUrl = `/api.php?amount=${amount_of_question}`; 
@@ -53,17 +54,24 @@ function Questions() {
             </Box>
         )
     }
+
+    const handleClickAnswer = () => {
+        if(questionIndex +1 < response.results.length){
+            setQuestionIndex(questionIndex + 1)
+        }
+    };
+
+
     return (
         <Box>
             <Typography variant="h4">Question {questionIndex +1 } </Typography>
             <Typography mt={5}>{response.results[questionIndex].question}</Typography>
-            <Box mt={2}>
-                <Button variant="contained">Answer 1</Button>
-            </Box>
-            <Box mt={2}>
-                <Button variant="contained">Answer 2</Button>
-            </Box>
-            <Box mt={5}>Score 2/6</Box>
+            {options.map((data, id) => (
+                <Box mt={2}>
+                    <Button onClick={handleClickAnswer} variant="contained">Answer 1</Button>
+                </Box>
+            ))}
+            <Box mt={5}>Score {score} / {response.results.length} </Box>
         </Box>
     )
 }
