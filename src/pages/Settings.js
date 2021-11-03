@@ -4,19 +4,30 @@ import { Box } from '@mui/system'
 import { SelectField } from '../components/SelectField'
 import { TextFieldComp } from '../components/TextFieldComp'
 import useAxios from '../hooks/useAxios'
+import { useHistory } from 'react-router'
 
 function Settings() {
     const { response, error, loading } = useAxios({ url: "/api_category.php"})
-    console.log(response)
+    const history = useHistory()
+
     const handleSubmit = (e) => {
         e.preventDefault(); 
-    } 
+        history.push('/questions')
+    }
 
-    if(loading) {
+    if(loading) { 
         return (
             <Box mt={20}>
                 <CircularProgress/>
             </Box>
+        )
+    }
+
+    if(error) {
+        return (
+            <Typography variant='h6' mt={20} color="red">
+                Someting Wong!
+            </Typography>
         )
     }
 
@@ -30,16 +41,6 @@ function Settings() {
         { id: "multiple", name: 'Multiple Choice' },
         { id: "boolean", name: 'True/False' }
     ]
-
-    if(error) {
-        return (
-            <Typography variant='h6' mt={20} color="red">
-                Someting Wong!
-            </Typography>
-        )
-    }
-
-
 
     return (
         <form onSubmit={handleSubmit}>

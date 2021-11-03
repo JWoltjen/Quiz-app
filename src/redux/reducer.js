@@ -40,7 +40,7 @@ const reducer = (state = initialState, action) => {
         case CHANGE_SCORE: 
             return {
                 ...state,
-                amount_of_question: action.payload
+                score: action.payload
             }; 
         default: 
             return state; 
