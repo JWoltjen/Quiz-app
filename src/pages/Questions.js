@@ -3,6 +3,7 @@ import { Box } from '@mui/system';
 import { useSelector } from 'react-redux'; 
 import useAxios from "../hooks/useAxios"; 
 import {useState, useEffect} from 'react'
+import {useHistory} from 'react-router-dom'
 
 const getRandomInt = (max) => {
     return Math.floor(Math.random() * Math.floor(max));
@@ -17,6 +18,8 @@ function Questions() {
         amount_of_question,
         score
     } = useSelector((state) => state); 
+    const history = useHistory(); 
+
 
     let apiUrl = `/api.php?amount=${amount_of_question}`; 
     if(question_category) {
@@ -44,6 +47,7 @@ function Questions() {
                 0,
                 question.correct_answer
             )
+            setOptions(answers)
         }
       }, [response, questionIndex]);
 
@@ -58,6 +62,8 @@ function Questions() {
     const handleClickAnswer = () => {
         if(questionIndex +1 < response.results.length){
             setQuestionIndex(questionIndex + 1)
+        } else {
+            history.push("/score")
         }
     };
 
@@ -68,7 +74,7 @@ function Questions() {
             <Typography mt={5}>{response.results[questionIndex].question}</Typography>
             {options.map((data, id) => (
                 <Box mt={2}>
-                    <Button onClick={handleClickAnswer} variant="contained">Answer 1</Button>
+                    <Button variant="contained">{data}</Button>
                 </Box>
             ))}
             <Box mt={5}>Score {score} / {response.results.length} </Box>
